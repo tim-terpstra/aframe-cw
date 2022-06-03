@@ -123,6 +123,7 @@ function galleryShortCode()
 
   <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@5/dist/aframe-event-set-component.min.js"></script>
   <style>
   /* deze styling staat alleen hier om de navigatie naar voren te halen en de footer te verstoppen op de
     3d galerie pagina
@@ -154,14 +155,20 @@ function galleryShortCode()
           $pos= $positions[$value["location"]-1];
           if ($pos["rotation"] == 0) {
             // right side wall
-            $imgText .= '<a-image height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . $pos["z"] . '" rotation="0 ' . $pos["rotation"] . ' 0" src="#my-image-' . $key . '" ></a-image>
+            $imgText .= '<a-image 
+            event-set__mouseenter="scale: 1.2 1.2 1"
+            event-set__mouseleave="scale: 1 1 1" 
+            height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . $pos["z"] . '" rotation="0 ' . $pos["rotation"] . ' 0" src="#my-image-' . $key . '" ></a-image>
                 <a-box height="' . $size["height"] . '" width="' . $size["width"] . '"  rotation="0 ' . $pos["rotation"] . '" color="grey" depth=".1" height="1" width="1" position="' . $pos["x"] . ' ' . $pos["y"] . ' ' .
                 ($pos["z"]-0.06) . '"></a-box>
                 <a-text rotation="0 ' . $pos["rotation"] . '" color="black"  position="-8 2 0.606"  text="value:"></a-text>';
           } elseif ($pos["rotation"] == 90) {
             // top wall
             $imgText .= '
-          <a-image height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . $pos["z"] . '" rotation="0 ' .
+          <a-image  
+          event-set__mouseenter="scale: 1.2 1.2 1"
+          event-set__mouseleave="scale: 1 1 1" 
+          height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . $pos["z"] . '" rotation="0 ' .
            $pos["rotation"] . ' 0" src="#my-image-' . $key . '" ></a-image>
                 <a-box height="' . $size["height"] . '" width="' . $size["width"] . '"  rotation="0 ' . $pos["rotation"] . '" color="grey" depth=".1" height="1" width="1" position="' . ($pos["x"]-0.06) . ' ' . $pos["y"] . ' '.
                  $pos["z"] . '"></a-box>
@@ -169,7 +176,10 @@ function galleryShortCode()
           } elseif ($pos["rotation"] == 180) {
             // left side wall
             $imgText .= '
-          <a-image height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . ($pos["z"]) . '" rotation="0 ' .
+          <a-image 
+          event-set__mouseenter="scale: 1.2 1.2 1"
+          event-set__mouseleave="scale: 1 1 1" 
+          height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . ($pos["z"]) . '" rotation="0 ' .
            $pos["rotation"] . ' 0" src="#my-image-' . $key . '" ></a-image>
                 <a-box height="' . $size["height"] . '" width="' . $size["width"] . '" rotation="0 ' . $pos["rotation"] . '" color="grey" depth=".1" height="1" width="1" position="' . $pos["x"] . ' ' . $pos["y"] . ' '
                  . ($pos["z"]+0.06) . '"></a-box>
@@ -177,7 +187,10 @@ function galleryShortCode()
           } elseif ($pos["rotation"] == 270) {
             // bottom wall
             $imgText .= '
-              <a-image height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . $pos["z"] . '" rotation="0 ' .
+              <a-image 
+              event-set__mouseenter="scale: 1.2 1.2 1"
+              event-set__mouseleave="scale: 1 1 1" 
+              height="' . $size["height"] . '" width="' . $size["width"] . '"  position="' . $pos["x"] . ' ' . $pos["y"] . ' ' . $pos["z"] . '" rotation="0 ' .
               $pos["rotation"] . ' 0" src="#my-image-' . $key . '" ></a-image>
               <a-box height="' . $size["height"] . '" width="' . $size["width"] . '"  rotation="0 ' . $pos["rotation"] . '" color="grey" depth=".1" height="1" width="1" position="' . ($pos["x"]+0.06) . ' ' . $pos["y"] . ' '
                . ($pos["z"]) . '"></a-box>
@@ -193,7 +206,13 @@ function galleryShortCode()
       </a-assets>
       <!-- Camera Entity -->
       <a-entity id="cameraHolder" width="0" depth="0" position="0 2 0">
-        <a-entity id="camera" camera look-controls wasd-controls="acceleration: 300" kinematic-body></a-entity>
+        <a-entity id="camera" camera look-controls wasd-controls="acceleration: 300" kinematic-body>
+          <a-entity cursor="fuse: true; fuseTimeout: 500"
+              position="0 0 -1"
+              geometry="primitive: ring; radiusInner: 0.010; radiusOuter: 0.020"
+              material="color: black; shader: flat">
+              </a-entity>
+        </a-entity>
       </a-entity>
       <a-box static-body="" position="-9.26 2 -2.35" width=".5" height="4" depth="13" src="#wall" repeat="2 2" normal-map="#wall" normal-texture-repeat="2 2"></a-box>
 
